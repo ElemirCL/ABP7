@@ -1,9 +1,7 @@
 const express = require('express');
 const hbs = require('hbs');
-
 const { registrarVisita } = require('./helpers/gestorLog');
 const router = require('./router');
-
 const app = express();
 
 // Configuración de Handlebars
@@ -29,5 +27,6 @@ app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Algo salió mal');
 });
+
 
 module.exports = app;

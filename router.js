@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const crud = require('./middlewares/crud')
 
 router.get('/', (req, res) => {
     res.render('index');
@@ -15,5 +16,7 @@ router.get('/status', (req, res) => {
 router.get('/saludo',(req,res)=>{
     res.send('<h1>Bienvenidos a ruta pública con respuesta en HTML</h1>')
 })
+
+router.get('/usuarios',crud.mostrarUsuarios);
 
 module.exports = router;
