@@ -1,7 +1,7 @@
 const express = require('express');
 const hbs = require('hbs');
-const { registrarVisita } = require('./helpers/gestorLog');
-const router = require('./router');
+const { registrarVisita } = require('./src/helpers/gestorLog');
+const router = require('./src/routes/router');
 const app = express();
 
 // Configuración de Handlebars
@@ -16,6 +16,7 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use(express.json());
 // Servir contenido estático
 app.use(express.static('public'));
 
