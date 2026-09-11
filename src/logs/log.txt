@@ -1,7 +1,18 @@
 09-09-2026, 7:01:27 p. m. - Ruta accedida: /usuarios/
 09-09-2026, 7:01:31 p. m. - Ruta accedida: /usuarios/
-Nuevo usuario registrado: [ID 1] 09-09-2026, 7:01:31 p. m.
 09-09-2026, 7:01:35 p. m. - Ruta accedida: /usuarios/
 09-09-2026, 8:16:57 p. m. - Ruta accedida: /usuarios/
 09-09-2026, 8:18:46 p. m. - Ruta accedida: /usuarios/
 09-09-2026, 8:18:59 p. m. - Ruta accedida: /usuarios/
+11-09-2026, 1:18:58 a. m. - Ruta accedida: /usuarios/
+11-09-2026, 1:27:39 a. m. - Ruta accedida: /usuarios/
+11-09-2026, 1:28:19 a. m. - Ruta accedida: /usuarios/1
+11-09-2026, 1:29:29 a. m. - Ruta accedida: /usuarios/1
+11-09-2026, 1:31:08 a. m. - Ruta accedida: /usuarios/1
+11-09-2026, 1:31:59 a. m. - Ruta accedida: /usuarios/1
+11-09-2026, 1:32:18 a. m. - Ruta accedida: /usuarios/2
+11-09-2026, 1:32:38 a. m. - Ruta accedida: /usuarios/2
+11-09-2026, 1:33:04 a. m. - Ruta accedida: /usuarios/
+11-09-2026, 1:35:01 a. m. - Ruta accedida: /usuarios/
+11-09-2026, 1:38:12 a. m. - Ruta accedida: /usuarios/
+11-09-2026, 1:39:10 a. m. - Ruta accedida: /usuarios/

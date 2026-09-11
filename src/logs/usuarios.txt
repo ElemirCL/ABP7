@@ -1,0 +1,4 @@
+Nuevo usuario registrado: [ID 24] 09-09-2026, 6:48:13 p. m.
+Usuario actualizado: [ID 1] 11-09-2026, 1:31:59 a. m.
+Usuario eliminado: [ID 2] 11-09-2026, 1:32:38 a. m.
+Usuario creado: [ID 3] 11-09-2026, 1:33:04 a. m.

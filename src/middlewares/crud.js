@@ -1,6 +1,37 @@
 const pool = require('../config/db');
 const { registrarUsuario } = require('../helpers/gestorLog');
 
+const crearUsuario = async (req, res) => {
+
+  const { nombre, correo, contrasena } = req.body;
+
+  if (!nombre || !correo || !contrasena) {
+    return res.status(400).json({ error: 'Nombre - Correo - Contraseña son requeridos' });
+  }
+
+  try {
+    await pool.query('BEGIN');
+    const query = `INSERT INTO usuarios (nombre, correo, contrasena) VALUES ($1, $2, $3) RETURNING id;`;
+    const values = [nombre, correo, contrasena];
+    const resultado = await pool.query(query, values);
+    const id = resultado.rows[0].id;
+    res.status(201).json({
+      mensaje: 'Usuario insertado',
+      id: resultado.id
+    });
+
+    registrarUsuario(id, 'creado');
+    await pool.query('COMMIT');
+  } catch (error) {
+    await pool.query('ROLLBACK');
+    res.status(500).json({
+      error: error.message,
+      code: error.code,
+      mensaje: 'Se ejecuta ROLLBACK: ningún cambio se aplicó.'
+    });
+  }
+};
+
 const mostrarUsuarios = async (req, res) => {
 
   const CAMPOS_USUARIO = 'id, nombre, correo, fecha_registro';
@@ -14,8 +45,10 @@ const mostrarUsuarios = async (req, res) => {
         error: 'No hay usuarios registrados.'
       });
     }
+    
     console.log(`Usuarios encontrados: ${resultado.rowCount}`);
-     res.json({
+    
+    res.json({
       mensaje: 'Lista de usuarios',
       total: resultado.rowCount,
       usuarios: resultado.rows
@@ -23,7 +56,7 @@ const mostrarUsuarios = async (req, res) => {
   } catch (error) {
     console.error(`Error al listar usuarios: ${error.code} - ${error.message}`);
     return res.status(500).json({ error: error.message });
-  }finally{
+  } finally {
     await pool.end();
   }
 };
@@ -42,6 +75,7 @@ const actualizarCorreo = async (req, res) => {
     const parametros = [correo, id]
     const resultado = await pool.query(query, parametros);
     if (resultado.rowCount > 0) {
+      registrarUsuario(id, 'actualizado');
       res.json({
         mesaje: 'Usuario actualizado',
         usuario: resultado.rows[0]
@@ -76,11 +110,13 @@ const eliminarUsuario = async (req, res) => {
       })
     }
     console.log(`Usuario eliminado. cantidad de registros afectados: ${resultado.rowCount}`);
+    registrarUsuario(id, 'eliminado');
     res.json({
       mensaje: "Usuario eliminado correctamente",
       registroEliminados: resultado.rowCount,
       usuarioEliminado: resultado.rows[0],
     });
+
   } catch (error) {
     console.log(`Error al eliminar usuario: ${error.message}`);
     res.status(500).json({ error: error.message });
@@ -92,37 +128,6 @@ const eliminarUsuario = async (req, res) => {
   }
 };
 
-
-const crearUsuario = async (req, res) => {
-
-  const { nombre, correo, contrasena } = req.body;
-
-  if (!nombre || !correo || !contrasena) {
-    return res.status(400).json({ error: 'Nombre - Correo - Contraseña son requeridos' });
-  }
-
-  try {
-    await pool.query('BEGIN');
-    const query = `INSERT INTO usuarios (nombre, correo, contrasena) VALUES ($1, $2, $3) RETURNING id;`;
-    const values = [nombre, correo, contrasena];
-    const resultado = await pool.query(query, values);
-    const id = resultado.rows[0].id;
-    res.status(201).json({
-      mensaje: 'Usuario insertado',
-      id: resultado.id
-    });
-    
-    registrarUsuario(id);
-    await pool.query('COMMIT');
-  } catch (error) {
-    await pool.query('ROLLBACK');
-    res.status(500).json({
-      error: error.message,
-      code: error.code,
-      mensaje: 'Se ejecuta ROLLBACK: ningún cambio se aplicó.'
-    });
-  }
-};
 
 module.exports = {
   mostrarUsuarios,
