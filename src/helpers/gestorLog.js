@@ -18,6 +18,22 @@ const registrarVisita = (ruta) => {
     });
 };
 
+const registrarUsuario = (id) => {
+  const ahora = new Date();
+  const fecha = ahora.toLocaleDateString('es-CL');
+  const hora = ahora.toLocaleTimeString('es-CL');
+
+  const registro =`Nuevo usuario registrado: [ID ${parseInt(id)}] ${fecha}, ${hora}\n`;
+
+   fs.appendFile(rutaArchivo, registro, (error) => {
+        if (error) {
+            console.error('Error al registrar la visita:', error);
+        }
+    });
+};
+
+
 module.exports = {
-    registrarVisita
+    registrarVisita,
+    registrarUsuario
 };

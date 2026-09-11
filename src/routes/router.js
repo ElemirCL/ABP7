@@ -20,8 +20,10 @@ router.get('/saludo', (req, res) => {
 router.get('/usuarios', crud.mostrarUsuarios);
 
 router.put('/usuarios/:id', crud.actualizarCorreo);
-router.delete('/usuarios/:id', crud.actualizarCorreo);
 
+router.delete('/usuarios/:id', crud.eliminarUsuario);
+
+router.post('/usuarios', crud.crearUsuario);
 
 
 
