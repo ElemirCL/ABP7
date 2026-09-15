@@ -45,9 +45,9 @@ const mostrarUsuarios = async (req, res) => {
         error: 'No hay usuarios registrados.'
       });
     }
-    
+
     console.log(`Usuarios encontrados: ${resultado.rowCount}`);
-    
+
     res.json({
       mensaje: 'Lista de usuarios',
       total: resultado.rowCount,
@@ -56,8 +56,6 @@ const mostrarUsuarios = async (req, res) => {
   } catch (error) {
     console.error(`Error al listar usuarios: ${error.code} - ${error.message}`);
     return res.status(500).json({ error: error.message });
-  } finally {
-    await pool.end();
   }
 };
 
@@ -128,10 +126,47 @@ const eliminarUsuario = async (req, res) => {
   }
 };
 
+const mostrarUsuariosPorId = async (req, res) => {
+  const { id } = req.params;
+
+  if (!id || isNaN(id) || parseInt(id) <= 0) {
+    console.log('ID ingresado no es válido.');
+    return res.status(400).json({
+      error: "Debe ingresar ID válido."
+    })
+  }
+
+  try {
+    const CAMPOS_USUARIO = 'id, nombre, correo, fecha_registro';
+    const query = `SELECT ${CAMPOS_USUARIO} FROM usuarios WHERE id = $1`;
+    const resultado = await pool.query(query, [id]);
+
+    if (resultado.rowCount === 0) {
+      return res.status(404).json({
+        error: 'No existe un usuario con ese ID.'
+      });
+    }
+    console.log('Usuario encontrado');
+    console.table(resultado.rows[0]);
+
+    return res.status(200).json({
+      mensaje: 'Usuario encontrado',
+      total: resultado.rowCount,
+      usuario: resultado.rows[0]
+    });
+  } catch (error) {
+    console.error(`Error al buscar usuario: ${error.code} - ${error.message}`);
+
+    return res.status(500).json({
+      error: 'Error interno al buscar el usuario.'
+    });
+  }
+};
 
 module.exports = {
   mostrarUsuarios,
   actualizarCorreo,
   eliminarUsuario,
-  crearUsuario
+  crearUsuario,
+  mostrarUsuariosPorId
 }

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const crud = require('../middlewares/crud')
+const orm = require('../models/usuario')
 
 router.get('/', (req, res) => {
     res.render('index');
@@ -19,12 +20,19 @@ router.get('/saludo', (req, res) => {
 
 router.get('/usuarios', crud.mostrarUsuarios);
 
+router.get('/usuarios/:id', crud.mostrarUsuariosPorId);
+
 router.put('/usuarios/:id', crud.actualizarCorreo);
 
 router.delete('/usuarios/:id', crud.eliminarUsuario);
 
 router.post('/usuarios', crud.crearUsuario);
 
+router.get('/listaORM', orm.listarUsuarios);
+
+router.get('/usuarios/:idUsuario/pedidos', orm.mostrarPedidosUsuario);
+
+router.post('/pedidos',orm.crearPedido)
 
 
 module.exports = router;
